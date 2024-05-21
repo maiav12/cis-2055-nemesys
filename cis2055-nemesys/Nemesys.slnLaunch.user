@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": []
+  },
+  {
+    "Name": "New Profile (1)",
+    "Projects": [
+      {
+        "Name": "Nemesys.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

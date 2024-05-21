@@ -1,0 +1,29 @@
+﻿@model Nemesys.ViewModels.InvestigationViewModel
+
+<h2>Create Investigation</h2>
+
+<form asp-action="CreateInvestigation" method="post">
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateOfAction"></label>
+        <input asp-for="DateOfAction" class="form-control" type="datetime-local" />
+        <span asp-validation-for="DateOfAction" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="InvestigatorEmail"></label>
+        <input asp-for="InvestigatorEmail" class="form-control" />
+        <span asp-validation-for="InvestigatorEmail" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="InvestigatorPhone"></label>
+        <input asp-for="InvestigatorPhone" class="form-control" />
+        <span asp-validation-for="InvestigatorPhone" class="text-danger"></span>
+    </div>
+   
+    <input type="hidden" asp-for="NearMissReportId" />
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model NearMissReportViewModel
+@inject UserManager<IdentityUser> UserManager
+
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="card bg-light mb-3">
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model.OptionalPhoto))
+        {
+            <img src="~/images/nearmissreports/@Model.OptionalPhoto" class="card-img-top mb-3" alt="Image for @Model.Title">
+        }
+        <h3 class="card-title">@Model.Title</h3>
+        <p class="card-text">
+            <small class="text-muted"><b>Date of Report:</b> @Model.DateOfReport.ToShortDateString()</small><br>
+            <small class="text-muted"><b>Hazard Type:</b> @Model.TypeOfHazard</small><br>
+            <small class="text-muted"><b>Description:</b> @Model.Description</small><br>
+            <small class="text-muted"><b>Location:</b> @Model.Location</small><br>
+            <small class="text-muted"><b>Date and Time Spotted:</b> @Model.DateAndTimeSpotted</small><br>
+            <small class="text-muted"><b>Reporter Email:</b> @Model.ReporterEmail</small><br>
+            <small class="text-muted"><b>Reporter Phone:</b> @Model.ReporterPhone</small><br>
+            <small class="text-muted"><b>Upvotes:</b> @Model.Upvotes</small>
+        </p>
+      
+    </div>
+
+        <!-- Display Investigation Details -->
+        <h3 class="text-primary">Investigation Details</h3>
+        <p class="card-text">
+            <small class="text-muted"><b>Investigator Email:</b> @Model.Investigation.InvestigatorEmail</small><br>
+            <small class="text-muted"><b>Investigator Phone:</b> @Model.Investigation.InvestigatorPhone</small><br>
+            <small class="text-muted"><b>Date of Action:</b> @Model.Investigation.DateOfAction.ToShortDateString()</small><br>
+            <small class="text-muted"><b>Status:</b> @Model.Status</small><br>
+            <small class="text-muted"><b>Investigation Description:</b> @Model.Investigation.Description</small>
+        </p>
+        </div>
+<form asp-action="Upvote" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-success">Upvote</button>
+</form>
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (UserManager.GetUserAsync(User).Result.Id == Model.Reporter.Id)
+            {
+                <form asp-controller="NearMissReport" asp-action="DeleteNearMissReport" method="post" onsubmit="return confirm('Are you sure you want to delete this report?')">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="nearMissReportId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a asp-controller="NearMissReport" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a>
+            }
+        }
+
+        @if (User.IsInRole("Admin"))
+        {
+            <!-- Button to add investigation -->
+            <a asp-action="CreateInvestigation" asp-route-id="@Model.Id" class="btn btn-primary mr-2">Add Investigation</a>
+
+            <!-- Buttons to update status -->
+            <div class="btn-group mr-2" role="group">
+                <a asp-action="UpdateStatus" asp-route-reportId="@Model.Id" asp-route-status="Closed" class="btn btn-success">Mark as Closed</a>
+                <a asp-action="UpdateStatus" asp-route-reportId="@Model.Id" asp-route-status="BeingInvestigated" class="btn btn-warning">Mark as Being Investigated</a>
+                <a asp-action="UpdateStatus" asp-route-reportId="@Model.Id" asp-route-status="NoActionRequired" class="btn btn-secondary">Mark as No Action Required</a>
+            </div>
+        }
+
+        <a asp-controller="NearMissReport" asp-action="Index" class="btn btn-primary">Back to list</a>
+    </div>
+</div>

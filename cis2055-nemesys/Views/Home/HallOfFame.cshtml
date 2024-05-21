@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ReporterRanking>
+
+@{
+    ViewData["Title"] = "Hall of Fame";
+}
+
+<h2>Hall of Fame</h2>
+<h3>Top Reporters of @DateTime.Now.Year</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Reporter Email</th>
+            <th>Number of Reports</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int rank = 1;
+            foreach (var reporter in Model)
+            {
+                <tr>
+                    <td>@rank</td>
+                    <td>@reporter.ReporterEmail</td>
+                    <td>@reporter.ReportCount</td>
+                </tr>
+                rank++;
+            }
+        }
+    </tbody>
+</table>

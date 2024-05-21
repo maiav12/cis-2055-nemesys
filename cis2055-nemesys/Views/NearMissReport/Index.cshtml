@@ -1,0 +1,49 @@
+﻿@model NearMissReportListViewModel
+
+@{
+    ViewData["Title"] = "Near Miss Reports";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="status">Filter by Status:</label>
+        <select id="status" name="status" class="form-control" asp-items="ViewBag.Statuses">
+            <option value="">All</option>
+            <option value="Open">Open</option>
+            <option value="Closed">Closed</option>
+            <option value="Being Investigated">Being Investigated</option>
+            <option value="NoActionRequired">No Action Required</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<div class="row">
+    @foreach (var report in Model.NearMissReports)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                @if (!string.IsNullOrEmpty(report.OptionalPhoto))
+                {
+                    <img class="card-img-top" src="@Url.Content("~/images/nearmissreports/" + report.OptionalPhoto)" alt="Image for @report.Title" />
+                }
+                <div class="card-body">
+                    <h3 class="card-title">@report.Title </h3>
+                    <p class="small">Date of Report: @report.DateOfReport.ToShortDateString()</p>
+                    <p class="small">Hazard Type: @report.TypeOfHazard</p>
+                    <p>@report.Description</p>
+                    <p class="small">Status: @report.Status</p>
+                    <p class="small">Upvotes: @report.Upvotes</p>
+                    <form asp-controller="NearMissReport" asp-action="Upvote" method="post" class="form-inline">
+                        <input type="hidden" name="id" value="@report.Id" />
+                        <button type="submit" class="btn btn-success">Upvote</button>
+                    </form>
+                    <a asp-controller="NearMissReport" asp-action="Details" asp-route-id="@report.Id" class="btn btn-primary mt-2">Details</a>
+                </div>
+            </div>
+        </div>
+    }
+    
+</div>

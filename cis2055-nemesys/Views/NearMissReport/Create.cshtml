@@ -1,0 +1,81 @@
+﻿@model EditNearMissReportViewModel
+
+
+@{
+    ViewData["Title"] = "Create Near Miss Report";
+}
+
+<form asp-action="Create" method="post" role="form" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Title" class="col-md-2"></label>
+        <div class="col-md-5">
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    
+    <div class="form-group">
+        <label asp-for="Location" class="col-md-2"></label>
+        <div class="col-md-5">
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateAndTimeSpotted" class="col-md-2"></label>
+        <div class="col-md-5">
+            <input asp-for="DateAndTimeSpotted" class="form-control" />
+            <span asp-validation-for="DateAndTimeSpotted" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="TypeOfHazard" class="col-md-2"></label>
+        <div class="col-md-5">
+            <input asp-for="TypeOfHazard" class="form-control" />
+            <span asp-validation-for="TypeOfHazard" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="col-md-2"></label>
+        <div class="col-md-5">
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReporterEmail" class="col-md-2"></label>
+        <div class="col-md-5">
+            <input asp-for="ReporterEmail" class="form-control" />
+            <span asp-validation-for="ReporterEmail" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReporterPhone" class="col-md-2"></label>
+        <div class="col-md-5">
+            <input asp-for="ReporterPhone" class="form-control" />
+            <span asp-validation-for="ReporterPhone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="OptionalPhoto" class="control-label">Upload Image</label>
+        <input type="file" class="form-control" name="imageFile" />
+        <span asp-validation-for="OptionalPhoto" class="text-danger"></span>
+    </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-5">
+            <input type="submit" class="btn btn-primary" value="Create Near Miss Report" />
+            <a asp-controller="NearMissReport" asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
